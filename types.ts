@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type PillarId = 'snufulufugus_stats' | 'snufulufugus_core' | 'snufulufugus_key' | 'snufulufugus_toolkit' | 'snufulufugus_archive' | 'snufulufugus_purifier' | 'snufulufugus_database' | 'snufulufugus_settings';
+export type PillarId = 'snufulufugus_stats' | 'snufulufugus_core' | 'snufulufugus_key' | 'snufulufugus_toolkit' | 'snufulufugus_archive' | 'snufulufugus_purifier' | 'snufulufugus_database' | 'snufulufugus_settings' | 'snufulufugus_defense' | 'snufulufugus_policy';
 
 export interface Pillar {
   id: PillarId;
@@ -20,8 +20,42 @@ export interface Persona {
   resolution: string;
   language: string;
   timezone: string;
-  platform: string; // Added for more spoofing variety
+  platform: string;
+  asn: string;
+  asnDescription: string;
+  colorDepth: number;
+  pixelDepth: number;
+  plugins: string;
+  incomeLevel: 'low' | 'middle' | 'high' | 'unknown';
+  ethnicity: string;
+  politicalAlignment: string;
+  isGenerated?: boolean;
+
+  // Hardware
+  deviceMemory: number;
+  gpu: string;
+  touchSupport: boolean;
+
+  // Software/Browser
+  browserVendor: string;
+  installedFonts: string[];
+  cookiesEnabled: boolean;
+  doNotTrack: '1' | '0' | 'unspecified';
+
+  // Network
+  connectionType: 'wifi' | 'cellular' | 'ethernet' | 'unknown';
+  downlink: number; // in Mbps
+
+  // Behavioral/Inferred
+  educationLevel: 'High School' | 'Bachelors' | 'Masters' | 'PhD' | 'Unknown';
+  interests: string[];
+  shoppingHabits: 'Budget' | 'Mid-range' | 'Luxury' | 'Unknown';
+  socialMediaPresence: 'High' | 'Medium' | 'Low' | 'None';
+
+  // Locale
+  acceptLanguages: string;
 }
+
 
 export interface SentryPacket {
   id:string;
@@ -70,4 +104,11 @@ export interface AgentConfig {
   provider: 'gemini' | 'custom';
   endpoint?: string;
   apiKey?: string;
+  collaborativeEndpoint1?: string;
+  collaborativeEndpoint2?: string;
+}
+
+export interface SearchEngine {
+  name: string;
+  searchUrl: string; // URL template with %s for the query
 }

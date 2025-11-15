@@ -22,7 +22,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ currentConfig, onSaveConf
   const isCustom = config.provider === 'custom';
 
   return (
-    <Panel title="snufulufugus settings" subtitle="application configuration">
+    <Panel title="Settings" subtitle="application configuration">
       <form onSubmit={handleSave}>
         <PanelSection title="Agent Configuration">
           <p className="text-sm text-gray-400 mb-4">
@@ -41,7 +41,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ currentConfig, onSaveConf
                   onChange={() => setConfig(c => ({ ...c, provider: 'gemini' }))}
                   className="form-radio h-4 w-4 text-cyan-500 bg-gray-700 border-gray-600 focus:ring-cyan-600"
                 />
-                <span className="text-gray-200">snufulufugus Agent (Gemini)</span>
+                <span className="text-gray-200">snufulufugusAgent (Gemini)</span>
               </label>
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input

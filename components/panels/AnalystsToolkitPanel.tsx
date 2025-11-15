@@ -1,10 +1,12 @@
-
 import React from 'react';
 import Panel, { PanelSection } from './Panel';
 import { CrosshairIcon } from '../Icons';
+import { SpoofedEvent } from '../../types';
 
 interface AnalystsToolkitPanelProps {
     targetUrl: string;
+    onAgentQuery: (query: string) => void;
+    spoofedEvents: SpoofedEvent[];
 }
 
 const getDomain = (url: string): string => {
@@ -27,7 +29,7 @@ const OSINT_TOOLS = {
     'HIBP': () => `https://haveibeenpwned.com/`, // Not domain specific
 };
 
-const AnalystsToolkitPanel: React.FC<AnalystsToolkitPanelProps> = ({ targetUrl }) => {
+const AnalystsToolkitPanel: React.FC<AnalystsToolkitPanelProps> = ({ targetUrl, onAgentQuery, spoofedEvents }) => {
     const isOfflineArchive = targetUrl.startsWith('local-archive://');
     const domain = getDomain(targetUrl);
 
@@ -51,6 +53,14 @@ const AnalystsToolkitPanel: React.FC<AnalystsToolkitPanelProps> = ({ targetUrl }
             alert('Invalid target URL to perform this action.');
         }
     }
+    
+    const handleDeepScan = () => {
+         if (isOfflineArchive) {
+            alert("This scan can only be run on live targets.");
+            return;
+        }
+        onAgentQuery(`Perform a deep OSINT analysis on the domain ${domain}. Investigate infrastructure, known breaches, related domains, and key personnel. Present the findings as a classified intelligence report.`);
+    };
 
     const handleScrape = () => {
         if (isOfflineArchive) {
@@ -61,8 +71,8 @@ const AnalystsToolkitPanel: React.FC<AnalystsToolkitPanelProps> = ({ targetUrl }
     }
 
   return (
-    <Panel title="snufulufugus toolkit" subtitle="analysis tools">
-      <PanelSection title="snufulufugus scraper">
+    <Panel title="snufulufugustoolkit" subtitle="analysis tools">
+      <PanelSection title="Data Scraper">
           <p className="text-sm text-gray-400 mb-4">
             {isOfflineArchive
               ? "Targeting offline archive. Activate for local data extraction."
@@ -88,7 +98,7 @@ const AnalystsToolkitPanel: React.FC<AnalystsToolkitPanelProps> = ({ targetUrl }
                      <button 
                         key={tool} 
                         onClick={() => handleOsintClick(tool)}
-                        className="snufulufugus-button text-xs py-1 px-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-transparent disabled:text-[#A0A0A0]"
+                        className="snufulufugus-button text-xs py-1 px-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-transparent disabled:text-[#A0A0E0]"
                         disabled={isOfflineArchive}
                         title={isOfflineArchive ? "Disabled for offline archives" : ""}
                      >
@@ -96,6 +106,14 @@ const AnalystsToolkitPanel: React.FC<AnalystsToolkitPanelProps> = ({ targetUrl }
                      </button>
                 ))}
             </div>
+             <button 
+                onClick={handleDeepScan}
+                className="w-full mt-3 snufulufugus-button disabled:opacity-50"
+                disabled={isOfflineArchive}
+                title={isOfflineArchive ? "Disabled for offline archives" : "Run AI-powered OSINT scan"}
+            >
+                Run Deep OSINT Scan
+            </button>
         </PanelSection>
     </Panel>
   );

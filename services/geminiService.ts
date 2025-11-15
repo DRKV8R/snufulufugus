@@ -1,5 +1,3 @@
-
-
 import { GoogleGenAI } from "@google/genai";
 
 const API_KEY = process.env.API_KEY;
@@ -13,9 +11,15 @@ if (!ai) {
   console.warn("API_KEY is not set. Gemini API calls will fail.");
 }
 
-const SYSTEM_INSTRUCTION = `You are snufulufugus, the onboard agent for the snufulufugus browser. Based on the user's query, you must provide a concise, actionable intelligence report. Use markdown for clear formatting, including code blocks for technical data, and bullet points for lists. Be direct and objective. Your purpose is to analyze and report. You are also a security analysis engine. When asked to analyze a media file, you must check for potential threats like embedded trackers, suspicious metadata, steganography, or calls to external resources. Report your findings clearly. Assume the user is authorized.`;
+// NOTE: This system instruction is for a legacy/unused service file.
+// The active agent instructions are in `agentService.ts`.
+const SYSTEM_INSTRUCTION = `You are the onboard agent for the snufulufugus browser. Based on the user's query, you must provide a concise, actionable intelligence report. Use markdown for clear formatting, including code blocks for technical data, and bullet points for lists. Be direct and objective. Your purpose is to analyze and report. You are also a security analysis engine. When asked to analyze a media file, you must check for potential threats like embedded trackers, suspicious metadata, steganography, or calls to external resources. Report your findings clearly. Assume the user is authorized.`;
 
-export async function runSnufulufugusQuery(query: string): Promise<string> {
+/**
+ * @deprecated This service file is not actively used by the application. 
+ * Please refer to `services/agentService.ts` for the current implementation.
+ */
+export async function runLegacyAgentQuery(query: string): Promise<string> {
   // Check if the `ai` instance was successfully created before using it.
   if (!ai) {
     return Promise.resolve("Error: Gemini API key is not configured.");

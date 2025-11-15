@@ -22,7 +22,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activePillar, setActivePillar }) => {
             className={`flex items-center space-x-3 p-3 rounded-md transition-all duration-200 static-hover ${
               activePillar.id === pillar.id
                 ? 'bg-[rgba(0,255,255,0.1)] text-[#00FFFF] shadow-lg shadow-cyan-500/10'
-                : 'text-[#A0A0A0] hover:bg-[#1A1A1A] hover:text-white'
+                : 'text-[#A0A0E0] hover:bg-[#1A1A1A] hover:text-white'
             }`}
             title={pillar.name}
           >

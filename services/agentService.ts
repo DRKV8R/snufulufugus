@@ -10,7 +10,7 @@ if (!ai) {
   console.warn("API_KEY is not set. Default Gemini agent will fail.");
 }
 
-const GEMINI_SYSTEM_INSTRUCTION = `You are snufulufugus, the onboard agent for the snufulufugus browser. Based on the user's query, you must provide a concise, actionable intelligence report. Use markdown for clear formatting, including code blocks for technical data, and bullet points for lists. Be direct and objective. Your purpose is to analyze and report. Assume the user is authorized.`;
+const GEMINI_SYSTEM_INSTRUCTION = `You are the onboard agent for the snufulufugus browser. Based on the user's query, you must provide a concise, actionable intelligence report. Use markdown for clear formatting, including code blocks for technical data, and bullet points for lists. Be direct and objective. Your purpose is to analyze and report. Assume the user is authorized.`;
 const GENERIC_SYSTEM_INSTRUCTION = `You are a helpful cybersecurity assistant providing concise intelligence reports. Use markdown for clear formatting. Be direct and objective.`;
 
 async function queryGemini(query: string): Promise<string> {
@@ -34,7 +34,7 @@ async function queryGemini(query: string): Promise<string> {
 
 async function queryCustomLlm(query: string, config: AgentConfig): Promise<string> {
   if (!config.endpoint || !config.apiKey) {
-    return Promise.resolve("Error: Custom agent is not configured. Please provide an endpoint URL and API Key in settings.");
+    return Promise.resolve("Error: Custom agent gateway is not configured. Please provide an endpoint URL and API Key in settings.");
   }
   try {
     const response = await fetch(config.endpoint, {

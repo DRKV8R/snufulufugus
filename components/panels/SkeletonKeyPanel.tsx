@@ -24,9 +24,9 @@ const SkeletonKeyPanel: React.FC<SkeletonKeyPanelProps> = ({ setSentryStatus, se
     }
 
   return (
-    <Panel title="snufulufugus key" subtitle="automation engine">
+    <Panel title="snufulufuguskey" subtitle="automation engine">
       <div className="grid grid-cols-1 gap-6">
-        <PanelSection title="snufulufugus guard">
+        <PanelSection title="Challenge Solver">
             <p className="text-sm text-gray-400 mb-4">System for CAPTCHAs and age gates.</p>
             <div className="space-y-2 max-h-60 overflow-y-auto pr-2">
                 {DEFAULT_SENTRY_PACKETS.map(packet => (
@@ -47,7 +47,7 @@ const SkeletonKeyPanel: React.FC<SkeletonKeyPanelProps> = ({ setSentryStatus, se
             </div>
         </PanelSection>
         
-        <PanelSection title="snufulufugus scripts">
+        <PanelSection title="Automation Scripts">
             <p className="text-sm text-gray-400 mb-4">In-browser scripting for automation.</p>
             <div className="space-y-4">
                 <div>

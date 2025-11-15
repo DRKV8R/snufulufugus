@@ -1,20 +1,37 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# snufulufugus browser
 
-# Run and deploy your AI Studio app
+**snufulufugus** is a browser-based interface designed to provide a suite of tools for offensive security research and red team operations. It offers a comprehensive toolkit for managing simulated digital identities (personas), analyzing web targets, and deploying defenses against tracking and de-anonymization in a sandboxed environment.
 
-This contains everything you need to run your app locally.
+This project serves as a technology demonstrator, conceptualizing how advanced privacy tools, OSINT techniques, and AI-powered analysis can be integrated into a cohesive platform for operators.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1SBk2WX_Zh5boOr6UBRktsFuddXbFFuF8
+---
 
-## Run Locally
+## Core Pillars
 
-**Prerequisites:**  Node.js
+The application is organized into several "Pillars," each representing a core functional area:
 
+-   **`Dashboard`**: A high-level dashboard visualizing the current operational security (OPSEC) configuration and its effectiveness.
+-   **`snufulufuguscore`**: Manages foundational systems like the secure VPN (Nomad), Tor integration (Phantom Veil), and service sandboxing.
+-   **`snufulufugusdatabase`**: A system for creating, managing, and analyzing digital identities (personas) and their browser fingerprints.
+-   **`snufulufugusdefense`**: A suite of tools to simulate active defenses against digital threats.
+-   **`snufulufuguskey`**: An engine for defeating site security measures (Sentry) and running custom automation scripts (Hydra).
+-   **`snufulufugustoolkit`**: A powerful set of tools, including an integrated OSINT suite and an AI Agent for deep analysis.
+-   **`snufulufuguspolicy`**: A dedicated module to cross-reference a target's privacy policy with its observed tracking behavior using the AI Agent.
+-   **`snufulufugusarchive`**: A system for creating and exploring secure, offline archives of target websites (Chronicler).
+-   **`snufulufuguspurifier`**: Deploys advanced, real-time defenses against trackers, fingerprinting, and data leakage.
+-   **`Settings`**: Configuration for the application, including the AI agent provider.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+
+## Integrated Tooling Concepts
+
+snufulufugus incorporates concepts from various security and intelligence tools to provide a rich, simulated experience:
+
+-   **AI Agent**: An onboard analysis assistant, powered by Google Gemini, capable of performing complex OSINT, code analysis, and security assessments.
+-   **Threat Shield**: A simulated real-time scanner that analyzes scripts and downloads for threats.
+-   **ASN-level Profiling**: Personas now include Autonomous System Number (ASN) data for more realistic network-level fingerprinting.
+-   **Deep OSINT Scan**: A one-click deep OSINT scan powered by the AI Agent.
+-   **Tracker Analysis**: The Purifier's deep scan functionality, which intercepts and logs third-party trackers.
+-   **Threat Monitor**: A simulated monitoring system that logs suspicious inbound connections to demonstrate threat detection.
+-   **Webcam Security**: A module to enforce disabled webcam access and scan for device enumeration scripts on a target page.
+-   **Policy Integrity Analysis**: A unique AI-powered feature that cross-references a website's privacy policy with its observed tracking behavior to identify discrepancies.

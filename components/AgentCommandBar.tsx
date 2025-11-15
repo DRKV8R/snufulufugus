@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { TerminalIcon } from './Icons';
 
@@ -21,13 +20,13 @@ const AgentCommandBar: React.FC<AgentCommandBarProps> = ({ onQuerySubmit, isLoad
     <form onSubmit={handleSubmit} className="flex items-center space-x-2">
       <div className="flex-shrink-0 flex items-center space-x-2">
         <TerminalIcon className="w-5 h-5 text-[#00FFFF]" />
-        <span className="text-sm font-mono font-bold text-[#00FFFF]">AGENT&gt;</span>
+        <span className="text-sm font-mono font-bold text-[#00FFFF]">AGENT></span>
       </div>
       <input
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Run analysis on target, query public records, check for vulnerabilities..."
+        placeholder="Analyze target, check vulnerabilities, run OSINT scan..."
         className="flex-grow text-sm snufulufugus-input !bg-[#0D0D0D] h-9"
         disabled={isLoading}
       />

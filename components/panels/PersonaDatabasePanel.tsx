@@ -1,10 +1,14 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import Panel, { PanelSection } from './Panel';
 import { Persona, SpoofedEvent } from '../../types';
 import PersonaDetailModal from '../PersonaDetailModal';
-import { ChevronUpIcon, ChevronDownIcon } from '../Icons';
+import { ChevronUpIcon, ChevronDownIcon, StarIcon } from '../Icons'; // Assuming StarIcon exists
 import FingerprintVisual from '../FingerprintVisual';
+
+// Add StarIcon if it doesn't exist in Icons.tsx
+const StarIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+);
 
 interface PersonaDatabasePanelProps {
     personas: Persona[];
@@ -12,9 +16,10 @@ interface PersonaDatabasePanelProps {
     setActivePersona: (persona: Persona) => void;
     spoofedEvents: SpoofedEvent[];
     targetUrl: string;
+    onGeneratePersona: () => void;
 }
 
-const PersonaDatabasePanel: React.FC<PersonaDatabasePanelProps> = ({ personas, activePersona, setActivePersona, spoofedEvents, targetUrl }) => {
+const PersonaDatabasePanel: React.FC<PersonaDatabasePanelProps> = ({ personas, activePersona, setActivePersona, spoofedEvents, targetUrl, onGeneratePersona }) => {
     
     const [viewingPersona, setViewingPersona] = useState<Persona | null>(null);
     const [sortConfig, setSortConfig] = useState<{ key: keyof Persona; direction: 'ascending' | 'descending' }>({ key: 'name', direction: 'ascending' });
@@ -102,7 +107,7 @@ const PersonaDatabasePanel: React.FC<PersonaDatabasePanelProps> = ({ personas, a
 
     return (
         <>
-            <Panel title="snufulufugus database" subtitle="persona management system">
+            <Panel title="snufulufugusdatabase" subtitle="persona management system">
                 <PanelSection title="Active Persona Fingerprint">
                     <p className="text-sm text-gray-400 mb-2">Analyze the complete digital fingerprint being presented by the active persona.</p>
                      <div className="flex items-center bg-[#1A1A1A] border border-[rgba(0,255,255,0.15)] rounded-md p-2 mb-3">
@@ -125,14 +130,23 @@ const PersonaDatabasePanel: React.FC<PersonaDatabasePanelProps> = ({ personas, a
 
                 <PanelSection title="Available Personas">
                     <div className="flex justify-between items-center mb-4">
-                        <p className="text-sm text-gray-400">Select a persona to view details and activate.</p>
-                        <button 
-                            onClick={handleExport} 
-                            className="snufulufugus-button text-xs py-1 px-3"
-                            title="Export all personas to snufulufugus_personas.csv"
-                        >
-                            Export to CSV
-                        </button>
+                        <p className="text-sm text-gray-400">Select a persona to activate, or generate a new one.</p>
+                        <div className="flex space-x-2">
+                             <button 
+                                onClick={onGeneratePersona} 
+                                className="snufulufugus-button text-xs py-1 px-3"
+                                title="Generate a new random persona"
+                            >
+                                Generate Random Persona
+                            </button>
+                            <button 
+                                onClick={handleExport} 
+                                className="snufulufugus-button text-xs py-1 px-3"
+                                title="Export all personas to snufulufugus_personas.csv"
+                            >
+                                Export to CSV
+                            </button>
+                        </div>
                     </div>
                     <div className="max-h-[45vh] overflow-y-auto pr-2">
                         <table className="w-full text-left text-sm table-fixed">
@@ -151,7 +165,12 @@ const PersonaDatabasePanel: React.FC<PersonaDatabasePanelProps> = ({ personas, a
                                         onClick={() => setViewingPersona(persona)}
                                         className={`cursor-pointer border-b border-[rgba(0,255,255,0.1)] transition-colors static-hover hover:bg-[rgba(0,255,255,0.05)] ${activePersona.id === persona.id ? 'bg-[rgba(0,255,255,0.1)]' : ''}`}
                                     >
-                                        <td className="p-2 font-semibold text-[#00FFFF] truncate" title={persona.name}>{persona.name}</td>
+                                        <td className="p-2 font-semibold text-[#00FFFF] truncate" title={persona.name}>
+                                            <div className="flex items-center">
+                                                {persona.isGenerated && <StarIcon className="w-3 h-3 text-yellow-400 mr-2 flex-shrink-0" title="Generated Persona"/>}
+                                                <span className="truncate">{persona.name}</span>
+                                            </div>
+                                        </td>
                                         <td className="p-2 text-gray-300 truncate" title={persona.team}>{persona.team}</td>
                                         <td className="p-2 text-gray-300 truncate" title={persona.occupation}>{persona.occupation}</td>
                                         <td className="p-2 text-gray-300 truncate" title={persona.region}>{persona.region}</td>

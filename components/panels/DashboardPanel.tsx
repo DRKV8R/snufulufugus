@@ -52,7 +52,7 @@ const DashboardPanel: React.FC<DashboardPanelProps> = ({
     }, []);
 
     return (
-        <Panel title="snufulufugus stats" subtitle="effectiveness dashboard">
+        <Panel title="Dashboard" subtitle="effectiveness dashboard">
              <PanelSection title="Universal Circuit Integrity Map">
                 <p className="text-sm text-gray-400 mb-4">Live visualization of the operational security circuit.</p>
                 <CircuitMap 

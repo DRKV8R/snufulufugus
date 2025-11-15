@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { XIcon } from './Icons';
 
@@ -16,7 +17,7 @@ const AgentResponseModal: React.FC<AgentResponseModalProps> = ({ isOpen, onClose
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 animate-fadeIn backdrop-blur-sm" onClick={onClose}>
       <div className="bg-[#141414] border border-[rgba(0,255,255,0.15)] rounded-lg shadow-2xl shadow-cyan-500/10 w-full max-w-3xl m-4 relative flex flex-col max-h-[80vh]" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between items-center p-4 border-b border-[rgba(0,255,255,0.15)] flex-shrink-0">
-          <h3 className="font-bold text-xl text-[#00FFFF] font-mono">snufulufugus Agent Report</h3>
+          <h3 className="font-bold text-xl text-[#00FFFF] font-mono">Agent Analysis Report</h3>
           <button onClick={onClose} className="p-1 text-gray-400 hover:text-white hover:bg-[#262626] rounded-full">
             <XIcon className="w-5 h-5" />
           </button>
@@ -26,7 +27,7 @@ const AgentResponseModal: React.FC<AgentResponseModalProps> = ({ isOpen, onClose
           {isLoading && (
             <div className="flex flex-col items-center justify-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400"></div>
-              <p className="mt-4 text-cyan-400">snufulufugus is hunting...</p>
+              <p className="mt-4 text-cyan-400">Agent is analyzing...</p>
             </div>
           )}
           {report && (

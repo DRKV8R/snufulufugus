@@ -1,54 +1,67 @@
 import React from 'react';
-import { Pillar, Persona, SentryPacket, HydraScript, PrivateArchive, PillarId } from './types';
-import { DashboardIcon, GhostIcon, KeyIcon, BeakerIcon, HistoryIcon, FilterIcon, DatabaseIcon, SettingsIcon } from './components/Icons';
+// FIX: Import SpoofedEvent to correctly type RISK_SCORES.
+import { Pillar, Persona, SentryPacket, HydraScript, PrivateArchive, PillarId, SearchEngine, SpoofedEvent } from './types';
+import { DashboardIcon, GhostIcon, KeyIcon, BeakerIcon, HistoryIcon, FilterIcon, DatabaseIcon, SettingsIcon, ShieldCheckIcon, ClipboardCheckIcon } from './components/Icons';
 
 export const PILLARS: Pillar[] = [
   {
     id: 'snufulufugus_stats',
-    name: 'snufulufugus stats',
-    description: 'effectiveness dashboard',
+    name: 'Dashboard',
+    description: 'Effectiveness dashboard',
     icon: <DashboardIcon className="w-6 h-6" />,
   },
   {
     id: 'snufulufugus_core',
-    name: 'snufulufugus core',
-    description: 'core systems',
+    name: 'snufulufuguscore',
+    description: 'Core systems',
     icon: <GhostIcon className="w-6 h-6" />,
   },
   {
     id: 'snufulufugus_database',
-    name: 'snufulufugus database',
-    description: 'persona management',
+    name: 'snufulufugusdatabase',
+    description: 'Persona management',
     icon: <DatabaseIcon className="w-6 h-6" />,
+  },
+    {
+    id: 'snufulufugus_defense',
+    name: 'snufulufugusdefense',
+    description: 'Active protection systems',
+    icon: <ShieldCheckIcon className="w-6 h-6" />,
   },
   {
     id: 'snufulufugus_key',
-    name: 'snufulufugus key',
-    description: 'automation engine',
+    name: 'snufulufuguskey',
+    description: 'Automation engine',
     icon: <KeyIcon className="w-6 h-6" />,
   },
   {
     id: 'snufulufugus_toolkit',
-    name: 'snufulufugus toolkit',
-    description: 'analysis tools',
+    name: 'snufulufugustoolkit',
+    description: 'Analysis tools',
     icon: <BeakerIcon className="w-6 h-6" />,
   },
   {
+    id: 'snufulufugus_policy',
+    name: 'snufulufuguspolicy',
+    description: 'Policy integrity analysis',
+    icon: <ClipboardCheckIcon className="w-6 h-6" />,
+  },
+  {
     id: 'snufulufugus_archive',
-    name: 'snufulufugus archive',
-    description: 'archival systems',
+    name: 'snufulufugusarchive',
+    description: 'Archival systems',
     icon: <HistoryIcon className="w-6 h-6" />,
   },
   {
     id: 'snufulufugus_purifier',
-    name: 'snufulufugus purifier',
-    description: 'deep cleaning tools',
+    name: 'snufulufuguspurifier',
+    description: 'Deep cleaning tools',
     icon: <FilterIcon className="w-6 h-6" />,
   },
   {
     id: 'snufulufugus_settings',
-    name: 'snufulufugus settings',
-    description: 'application configuration',
+    name: 'Settings',
+    description: 'Application configuration',
     icon: <SettingsIcon className="w-6 h-6" />,
   },
 ];
@@ -58,186 +71,336 @@ export const VPN_REGIONS: string[] = ['US-West', 'US-East', 'EU-Central', 'EU-We
 // FIX: Moved SPOOF_ORIGINS from App.tsx to be shared across components.
 export const SPOOF_ORIGINS = ['doubleclick.net', 'google-analytics.com', 'track.adform.net', 'criteo.com', 'facebook.com', 'app-measurement.com', 'scorecardresearch.com', 'quantserve.com', 'amazon-adsystem.com'];
 
+export const SEARCH_ENGINES: SearchEngine[] = [
+  { name: 'Google', searchUrl: 'https://www.google.com/search?q=%s' },
+  { name: 'Bing', searchUrl: 'https://www.bing.com/search?q=%s' },
+  { name: 'DuckDuckGo', searchUrl: 'https://duckduckgo.com/?q=%s' },
+  { name: 'StartPage', searchUrl: 'https://www.startpage.com/sp/search?q=%s' },
+  { name: 'Yandex', searchUrl: 'https://yandex.com/search/?text=%s' },
+  { name: 'Torch (Tor)', searchUrl: 'http://torchdeedp3i2jigzjdmfpn5ttjhthh5wbmda2rr3jvqjg5p77c54dqd.onion/search?query=%s' },
+];
+
+
 export const DEFAULT_PERSONAS: Persona[] = [
   {
     id: 'p1',
-    name: 'Peter Oldring',
-    team: 'The Network',
-    occupation: 'Network Censor',
-    backstory: 'Enjoys bleeping out curse words; tries to prevent offensive content.',
-    region: 'USA',
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
-    resolution: '1920x1080',
+    name: 'Chadwick "Chaz" Worthington III',
+    team: 'Crypto Enthusiasts',
+    occupation: 'NFT Sommelier / Aspiring Finfluencer',
+    backstory: 'Chaz spends his parents\' money on "digital art" and offers unsolicited financial advice on Discord. His entire personality is based on a single Bitcoin he bought in 2021.',
+    region: 'Monaco',
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 OPR/110.0.0.0',
+    resolution: '3440x1440',
     language: 'en-US',
-    timezone: 'America/Los_Angeles',
+    timezone: 'Europe/Monaco',
     platform: 'Win32',
+    asn: 'AS6663',
+    asnDescription: 'MONACO-TELECOM, MC',
+    colorDepth: 24,
+    pixelDepth: 24,
+    plugins: 'Metamask Wallet Extension, Phantom Wallet, VPN Blocker Blocker',
+    incomeLevel: 'high',
+    ethnicity: 'Caucasian',
+    politicalAlignment: 'Anarcho-Capitalist',
+    deviceMemory: 64,
+    gpu: 'NVIDIA GeForce RTX 4090',
+    touchSupport: false,
+    browserVendor: 'Google Inc.',
+    installedFonts: ['Papyrus', 'Comic Sans MS', 'Impact', 'Arial Black'],
+    cookiesEnabled: true,
+    doNotTrack: '0',
+    connectionType: 'ethernet',
+    downlink: 1000,
+    educationLevel: 'Bachelors',
+    interests: ['Vaping', 'Disrupting Paradigms', 'Lamborghinis', 'Shouting "HODL"'],
+    shoppingHabits: 'Luxury',
+    socialMediaPresence: 'High',
+    acceptLanguages: 'en-US,en;q=0.9',
   },
   {
     id: 'p2',
-    name: 'Babaganoush',
-    team: 'Unemployed',
-    occupation: 'Pleasure Giver',
-    backstory: 'Gives 110% to pleasure; three-time "fastest typist in the world."',
-    region: 'USA',
-    userAgent: 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0',
-    resolution: '1366x768',
+    name: 'Brenda "B-REN" Reynolds',
+    team: 'Multi-Level Marketers',
+    occupation: 'Wellness Advocate & #BossBabe',
+    backstory: 'Brenda floods Facebook with posts about essential oils and leggings. She believes she\'s the CEO of her own company, which is coincidentally shaped like a pyramid.',
+    region: 'Utah, USA',
+    userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/125.0.6422.80 Mobile/15E148 Safari/604.1',
+    resolution: '390x844',
     language: 'en-US',
-    timezone: 'America/Chicago',
-    platform: 'Linux x86_64',
+    timezone: 'America/Denver',
+    platform: 'iPhone',
+    asn: 'AS7922',
+    asnDescription: 'COMCAST-VADS, US',
+    colorDepth: 24,
+    pixelDepth: 24,
+    plugins: 'No plugins reported',
+    incomeLevel: 'low',
+    ethnicity: 'Caucasian',
+    politicalAlignment: 'Undeclared',
+    deviceMemory: 6,
+    gpu: 'Apple A15 GPU',
+    touchSupport: true,
+    browserVendor: 'Google Inc.',
+    installedFonts: ['Helvetica Neue', 'Arial', 'San Francisco'],
+    cookiesEnabled: true,
+    doNotTrack: '1',
+    connectionType: 'wifi',
+    downlink: 50,
+    educationLevel: 'High School',
+    interests: ['Scrapbooking', 'Pyramid Schemes', 'Saying "Hun"', 'Live, Laugh, Love'],
+    shoppingHabits: 'Budget',
+    socialMediaPresence: 'High',
+    acceptLanguages: 'en-US,en;q=0.9',
   },
   {
     id: 'p3',
-    name: 'Hacker Hank',
-    team: 'Computer Nerds',
-    occupation: 'Programmer',
-    backstory: "Lives in his mom's basement; uses a VPN for everything.",
-    region: 'USA',
-    userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-    resolution: '2560x1440',
+    name: 'Gorp, the Time Traveler',
+    team: 'Anomalous Entities',
+    occupation: 'Temporal Observer / Sandwich Enthusiast',
+    backstory: 'Gorp claims to be from the year 2342, sent back to observe "The Great Binge-Watching Era." He is easily distracted by artisanal pickles and communicates primarily through obscure 90s TV show references.',
+    region: 'Antarctica',
+    userAgent: 'Mozilla/5.0 (X11; FreeBSD amd64; rv:109.0) Gecko/20100101 Firefox/115.0',
+    resolution: '1920x1080',
+    language: 'en-US',
+    timezone: 'Antarctica/McMurdo',
+    platform: 'FreeBSD amd64',
+    asn: 'AS27504',
+    asnDescription: 'US-NATIONAL-SCIENCE-FOUNDATION, US',
+    colorDepth: 32,
+    pixelDepth: 32,
+    plugins: 'No plugins reported',
+    incomeLevel: 'unknown',
+    ethnicity: 'Unknown',
+    politicalAlignment: 'Post-Scarcity Utopian',
+    deviceMemory: 16,
+    gpu: 'llvmpipe (LLVM 15.0.7, 256 bits)',
+    touchSupport: false,
+    browserVendor: '',
+    installedFonts: ['DejaVu Sans Mono', 'Liberation Serif', 'Noto Sans'],
+    cookiesEnabled: false,
+    doNotTrack: '1',
+    connectionType: 'ethernet',
+    downlink: 100,
+    educationLevel: 'PhD',
+    interests: ['Quantum Physics', 'Pastrami', 'The works of Joss Whedon', 'Avoiding paradoxes'],
+    shoppingHabits: 'Unknown',
+    socialMediaPresence: 'None',
+    acceptLanguages: 'en-US,en;q=0.5',
+  },
+   {
+    id: 'p4',
+    name: 'Agnes Weatherwax',
+    team: 'Hobbyists & Retirees',
+    occupation: 'Competitive Gardener / Neighborhood Watch Captain',
+    backstory: 'Agnes spends her days cultivating prize-winning roses and her nights monitoring the neighborhood for suspicious squirrels. Her browser history is a mix of organic pesticide recipes and police scanner forums.',
+    region: 'Ohio, USA',
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.2535.67',
+    resolution: '1366x768',
     language: 'en-US',
     timezone: 'America/New_York',
-    platform: 'Linux x86_64',
-  },
-  {
-    id: 'p4',
-    name: 'Dr. Evil',
-    team: 'Villains',
-    occupation: 'Mastermind',
-    backstory: 'Demands a ransom of... one million dollars.',
-    region: 'Belgium',
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0',
-    resolution: '1920x1080',
-    language: 'fr-BE',
-    timezone: 'Europe/Brussels',
     platform: 'Win32',
-  },
-  {
+    asn: 'AS30036',
+    asnDescription: 'FRONTIER-FRTR, US',
+    colorDepth: 24,
+    pixelDepth: 24,
+    plugins: 'Microsoft Office, Adobe Acrobat Reader',
+    incomeLevel: 'middle',
+    ethnicity: 'Caucasian',
+    politicalAlignment: 'Centrist',
+    deviceMemory: 8,
+    gpu: 'Intel(R) UHD Graphics 620',
+    touchSupport: false,
+    browserVendor: 'Google Inc.',
+    installedFonts: ['Times New Roman', 'Arial', 'Courier New', 'Calibri'],
+    cookiesEnabled: true,
+    doNotTrack: 'unspecified',
+    connectionType: 'wifi',
+    downlink: 25,
+    educationLevel: 'High School',
+    interests: ['Gardening', 'Bird Watching', 'Conspiracy Theories', 'Baking'],
+    shoppingHabits: 'Mid-range',
+    socialMediaPresence: 'Low',
+    acceptLanguages: 'en-US',
+   },
+   {
     id: 'p5',
-    name: 'Captain Kirk-Off',
-    team: 'Sci-Fi',
-    occupation: 'Starship Captain',
-    backstory: 'Only communicates in overly dramatic pauses and cheesy wrestling moves.',
-    region: 'USA',
-    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15',
-    resolution: '2880x1800',
-    language: 'en-US',
-    timezone: 'America/Los_Angeles',
+    name: 'Kaito Tanaka',
+    team: 'Students & Researchers',
+    occupation: 'Computer Science Undergrad',
+    backstory: 'Kaito is fueled by instant noodles and the fear of failing his data structures class. He lives on Stack Overflow and believes sleep is a suggestion, not a requirement.',
+    region: 'Tokyo, Japan',
+    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    resolution: '1440x900',
+    language: 'ja',
+    timezone: 'Asia/Tokyo',
     platform: 'MacIntel',
+    asn: 'AS4713',
+    asnDescription: 'NTT-OCN, JP',
+    colorDepth: 24,
+    pixelDepth: 24,
+    plugins: 'Grammarly, Dark Reader, AdBlock Plus',
+    incomeLevel: 'low',
+    ethnicity: 'Asian',
+    politicalAlignment: 'Apolitical',
+    deviceMemory: 16,
+    gpu: 'Intel Iris Plus Graphics 645',
+    touchSupport: false,
+    browserVendor: 'Google Inc.',
+    installedFonts: ['Hiragino Kaku Gothic ProN', 'Osaka', 'MS PGothic', 'Yu Gothic'],
+    cookiesEnabled: true,
+    doNotTrack: '1',
+    connectionType: 'ethernet',
+    downlink: 500,
+    educationLevel: 'Bachelors',
+    interests: ['Anime', 'Competitive Programming', 'Cybersecurity CTFs', 'Gacha Games'],
+    shoppingHabits: 'Budget',
+    socialMediaPresence: 'Medium',
+    acceptLanguages: 'ja,en-US;q=0.9,en;q=0.8',
   },
   {
     id: 'p6',
-    name: 'snufulufugus',
-    team: 'Crypto-Anarchists',
+    name: 'Nyx',
+    team: 'Independent Researchers',
     occupation: 'Digital Phantom',
-    backstory: 'A ghost in the machine. Believed to be a myth, a rogue AI, or just a very paranoid developer.',
+    backstory: 'Existing only as whispers in data streams, Nyx is a modern ghost in the machine. Their motives are unclear, but their presence is felt in the quiet correction of information and the subtle disruption of data harvesters.',
     region: 'Iceland',
-    userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Vivaldi/6.7.3329.21',
-    resolution: '1680x1050',
-    language: 'is-IS',
+    userAgent: 'Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0',
+    resolution: '1920x1200',
+    language: 'en-GB',
     timezone: 'Atlantic/Reykjavik',
     platform: 'Linux x86_64',
-  },
+    asn: 'AS50899',
+    asnDescription: 'NOVA-ASN, IS',
+    colorDepth: 24,
+    pixelDepth: 24,
+    plugins: 'No plugins reported',
+    incomeLevel: 'unknown',
+    ethnicity: 'Unknown',
+    politicalAlignment: 'Undeclared',
+    deviceMemory: 32,
+    gpu: 'AMD Radeon RX 6800 XT',
+    touchSupport: false,
+    browserVendor: '',
+    installedFonts: ['Terminus', 'Iosevka', 'Fira Code', 'Monospace'],
+    cookiesEnabled: false,
+    doNotTrack: '1',
+    connectionType: 'ethernet',
+    downlink: 1000,
+    educationLevel: 'Unknown',
+    interests: ['Cryptography', 'Decentralization', 'Philosophy', 'Theoretical Physics'],
+    shoppingHabits: 'Unknown',
+    socialMediaPresence: 'None',
+    acceptLanguages: 'en-GB,en;q=0.5',
+  }
 ];
 
+// FIX: The `risk` property belongs to SpoofedEvent, not Persona.
+export const RISK_SCORES: Record<SpoofedEvent['risk'], number> = {
+    high: 5,
+    medium: 2,
+    low: 1
+};
 
 export const DEFAULT_SENTRY_PACKETS: SentryPacket[] = [
-    { id: 'sp1', domain: 'google.com', solvedAt: '2024-05-20 14:32 UTC', type: 'CAPTCHA', region: 'US-East' },
-    { id: 'sp2', domain: 'cloudflare.com', solvedAt: '2024-05-19 08:11 UTC', type: 'CAPTCHA', region: 'US-West' },
-    { id: 'sp3', domain: 'gaming.example', solvedAt: '2024-05-18 21:54 UTC', type: 'Age Gate', region: 'EU-Central' },
+    { id: 'sp1', domain: 'g.co', solvedAt: '2025-03-15 10:30:11', type: 'CAPTCHA', region: 'US-West' },
+    { id: 'sp2', domain: 'example.com', solvedAt: '2025-03-14 22:15:01', type: 'Age Gate', region: 'EU-Central' },
+    { id: 'sp3', domain: 'another-site.net', solvedAt: '2025-03-13 08:05:45', type: 'CAPTCHA', region: 'Asia-Pacific' }
 ];
 
 export const DEFAULT_HYDRA_SCRIPTS: HydraScript[] = [
-    { 
-        id: 'hs1', 
-        name: 'OSINT-Username.js', 
-        description: 'Sherlock-style username search across social networks.',
-        code: `// snufulufugus Script: OSINT-Username.js
-async function findUsernames(username) {
-  const targets = ['twitter', 'instagram', 'github'];
-  const results = {};
-  for (const site of targets) {
-    const url = \`https://\${site}.com/\${username}\`;
-    const response = await snufulufugus.fetch(url, { method: 'HEAD' });
-    results[site] = response.ok;
-  }
-  return results;
+    {
+        id: 'hs1',
+        name: 'Cookie Consent',
+        description: 'Auto-clicks "Accept All" on cookie banners.',
+        code: `
+// Find all buttons with text suggesting acceptance and click them
+const consentKeywords = ['Accept', 'Agree', 'OK', 'Allow'];
+const buttons = Array.from(document.querySelectorAll('button, a[role="button"]'));
+const consentButton = buttons.find(btn => 
+    consentKeywords.some(keyword => btn.innerText.includes(keyword))
+);
+if (consentButton) {
+    consentButton.click();
+    console.log('Cookie consent clicked.');
 }
-// To run: await findUsernames('example_user');`
+        `
     },
-    { 
-        id: 'hs2', 
-        name: 'Subdomain-Enum.js', 
-        description: 'Basic subdomain enumeration via dictionary.',
-        code: `// snufulufugus Script: Subdomain-Enum.js
-async function enumSubdomains(domain) {
-  const subdomains = ['www', 'api', 'dev', 'staging'];
-  const found = [];
-  for (const sub of subdomains) {
-    const url = \`https://\${sub}.\${domain}\`;
-    try {
-      await snufulufugus.fetch(url, { method: 'HEAD' });
-      found.push(url);
-    } catch (e) { /* ignore */ }
-  }
-  return found;
-}
-// To run: await enumSubdomains('example.com');`
-    },
-    { 
-        id: 'hs3', 
-        name: 'Daily-Diff.js', 
-        description: 'Archives a target daily and alerts on changes.',
-        code: `// snufulufugus Script: Daily-Diff.js
-async function dailyDiff(url) {
-  // Use archive to save the site
-  const archiveId = await snufulufugus.archive.create(url, {
-    authenticated: true
-  });
-  
-  // Get yesterday's archive
-  const previousArchive = snufulufugus.archive.getLatest(url, { before: '1d' });
+    {
+        id: 'hs2',
+        name: 'Form Filler',
+        description: 'Fills login forms with dummy data.',
+        code: `
+// A very basic example to fill common form fields
+const emailInput = document.querySelector('input[type="email"], input[name="username"]');
+const passwordInput = document.querySelector('input[type="password"], input[name="password"]');
 
-  if (previousArchive) {
-    // Run a diff
-    const diff = await snufulufugus.archive.diff(previousArchive.id, archiveId);
-    if (diff.hasChanges) {
-      snufulufugus.notify(\`Changes detected on \${url}\`);
+if (emailInput) emailInput.value = 'user@example.com';
+if (passwordInput) passwordInput.value = 'SecurePassword123!';
+
+console.log('Forms filled with dummy data.');
+        `
     }
-  }
-  return { newArchiveId: archiveId };
-}
-// To run: await dailyDiff('https://example.com');`
-    },
 ];
 
 export const DEFAULT_PRIVATE_ARCHIVES: PrivateArchive[] = [
-    { 
-        id: 'pa1', 
-        domain: 'internal.corp.example', 
-        capturedAt: '2024-05-21 10:05 UTC', 
-        size: '1.2 GB', 
+    {
+        id: 'pa1',
+        domain: 'internal.corp.net',
+        capturedAt: '2024-01-10',
+        size: '1.2 GB',
         status: 'Completed',
         mediaAssets: [
-            { name: 'Q2_Strategy_Meeting.mp4', type: 'video', url: 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' },
-            { name: 'CEO_Town_Hall.mp3', type: 'audio', url: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' },
-            { name: 'Project_Phoenix_Brief.pdf', type: 'document', url: '#' },
+            { name: 'Onboarding_Video_2024.mp4', type: 'video', url: 'https://storage.googleapis.com/web-dev-assets/video-and-source-tags/chrome.mp4' },
+            { name: 'CEO_Town_Hall_Q1.mp3', type: 'audio', url: 'https://storage.googleapis.com/web-dev-assets/video-and-source-tags/chrome.mp4' },
+            { name: 'Q1_Financials_DRAFT.pdf', type: 'document', url: '#' },
         ]
     },
-    { 
-        id: 'pa2', 
-        domain: 'social.network.example', 
-        capturedAt: '2024-05-20 18:45 UTC', 
-        size: '874 MB', 
+    {
+        id: 'pa2',
+        domain: 'dev.api.example.com',
+        capturedAt: '2024-02-22',
+        size: '350 MB',
         status: 'Completed',
         mediaAssets: [
-             { name: 'Leaked_Ad_Campaign.mp4', type: 'video', url: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4' },
+            { name: 'API_Demo_Walkthrough.mp4', type: 'video', url: 'https://storage.googleapis.com/web-dev-assets/video-and-source-tags/chrome.mp4' },
+            { name: 'Rate_Limiting_Explanation.mp3', type: 'audio', url: '#' },
         ]
     },
-    { id: 'pa3', domain: 'news.outlet.example', capturedAt: '2024-05-19 09:12 UTC', size: '2.5 GB', status: 'Failed' },
+    {
+        id: 'pa3',
+        domain: 'beta.webapp.io',
+        capturedAt: '2024-03-01',
+        size: '2.5 GB',
+        status: 'Crawling...',
+        mediaAssets: []
+    }
 ];
 
-export const RISK_SCORES: { [key in 'low' | 'medium' | 'high']: number } = {
-  low: 1,
-  medium: 2,
-  high: 5,
-};
+// Data for Persona Genesis Module
+export const NEUTRAL_REGIONS = [
+  { name: 'Switzerland', timezone: 'Europe/Zurich', lang: 'de-CH', asn: 'AS3303', asnDesc: 'SWITCH, CH' },
+  { name: 'New Zealand', timezone: 'Pacific/Auckland', lang: 'en-NZ', asn: 'AS9790', asnDesc: 'Spark, NZ' },
+  { name: 'Costa Rica', timezone: 'America/Costa_Rica', lang: 'es-CR', asn: 'AS11816', asnDesc: 'ICE, CR' },
+  { name: 'Finland', timezone: 'Europe/Helsinki', lang: 'fi-FI', asn: 'AS1741', asnDesc: 'Elisa, FI' },
+  { name: 'Uruguay', timezone: 'America/Montevideo', lang: 'es-UY', asn: 'AS27735', asnDesc: 'ANTEL, UY' },
+];
+
+export const COMMON_GPUS = [
+  'NVIDIA GeForce RTX 3060', 'Intel(R) Iris(R) Xe Graphics', 'AMD Radeon RX 6700 XT', 
+  'NVIDIA GeForce GTX 1650', 'Apple M1', 'Qualcomm Adreno 650'
+];
+
+export const COMMON_CPUS = [
+    'Intel Core i7-1165G7', 'AMD Ryzen 5 5600X', 'Apple M1', 'Intel Core i5-10400'
+];
+
+export const COMMON_PLATFORMS = ['Win32', 'MacIntel', 'Linux x86_64', 'iPhone', 'Android'];
+
+export const COMMON_RESOLUTIONS = ['1920x1080', '1366x768', '1440x900', '1536x864', '2560x1440', '360x640', '390x844'];
+
+export const COMMON_USER_AGENTS = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0',
+    'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1'
+];

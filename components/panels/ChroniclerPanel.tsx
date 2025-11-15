@@ -116,7 +116,7 @@ const ChroniclerPanel: React.FC<ChroniclerPanelProps> = ({
 
   return (
     <>
-    <Panel title="snufulufugus archive" subtitle="archival systems">
+    <Panel title="snufulufugusarchive" subtitle="archival systems">
        <PanelSection title="Mode 1: Public Archive Explorer">
             <p className="text-sm text-gray-400 mb-4">Analysis of public archives like the Wayback Machine.</p>
             <div className="space-y-4">
@@ -159,7 +159,7 @@ const ChroniclerPanel: React.FC<ChroniclerPanelProps> = ({
                 </div>
             </div>
        </PanelSection>
-       <PanelSection title="Mode 2: Private snufulufugus Archives">
+       <PanelSection title="Mode 2: Private Offline Archives">
             <p className="text-sm text-gray-400 mb-4">Create and manage private, offline archives of targets.</p>
 
             <div className="bg-[#1A1A1A]/50 p-3 rounded-md border border-[rgba(0,255,255,0.15)] mb-4">

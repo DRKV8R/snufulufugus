@@ -23,7 +23,7 @@ const MediaDecontaminationModal: React.FC<MediaDecontaminationModalProps> = ({ a
         <div className="flex justify-between items-center p-4 border-b border-yellow-500/30 bg-yellow-900/20 flex-shrink-0">
           <div className="flex items-center space-x-3">
              <ShieldIcon className="w-6 h-6 text-yellow-400" />
-            <h3 className="font-bold text-xl text-yellow-400 font-mono">Media Decontamination Chamber</h3>
+            <h3 className="font-bold text-xl text-yellow-400 font-mono">Media Security Scan</h3>
           </div>
           <button onClick={onClose} className="p-1 text-gray-400 hover:text-white hover:bg-[#262626] rounded-full">
             <XIcon className="w-5 h-5" />
@@ -42,7 +42,7 @@ const MediaDecontaminationModal: React.FC<MediaDecontaminationModalProps> = ({ a
             {isAnalyzing && (
                  <div className="flex flex-col items-center justify-center h-40 bg-black/30 rounded-md border border-dashed border-cyan-500/30">
                     <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-cyan-400"></div>
-                    <p className="mt-4 text-cyan-400 font-mono">Agent is analyzing for hidden packets...</p>
+                    <p className="mt-4 text-cyan-400 font-mono">Agent is analyzing for threats...</p>
                 </div>
             )}
             
@@ -62,13 +62,13 @@ const MediaDecontaminationModal: React.FC<MediaDecontaminationModalProps> = ({ a
                 <div className="flex space-x-4">
                      <button 
                         onClick={() => handlePlayback('Secure Local Player')}
-                        className="flex-1 snufulufugus-button primary"
+                        className="flex-1 sentinel-button primary"
                      >
                         Use Secure Local Player
                     </button>
                      <button 
                         onClick={() => handlePlayback('Sandboxed Web Player')}
-                        className="flex-1 snufulufugus-button"
+                        className="flex-1 sentinel-button"
                     >
                         Use Sandboxed Web Player
                     </button>
