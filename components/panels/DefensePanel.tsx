@@ -22,7 +22,9 @@ const Toggle: React.FC<{ label: string; description: string; enabled: boolean; s
 const DefensePanel: React.FC<DefensePanelProps> = ({ onAgentQuery }) => {
     const [isThreatShieldActive, setThreatShieldActive] = useState(true);
     const [isThreatMonitorActive, setThreatMonitorActive] = useState(false);
+    const [isRecallBlockerActive, setRecallBlockerActive] = useState(true);
     const [monitorLogs, setMonitorLogs] = useState<string[]>([]);
+    const [recallBlockerLog, setRecallBlockerLog] = useState('');
     
     const [scriptsScanned, setScriptsScanned] = useState(1337);
     const [threatsNeutralized, setThreatsNeutralized] = useState(42);
@@ -56,6 +58,20 @@ const DefensePanel: React.FC<DefensePanelProps> = ({ onAgentQuery }) => {
         return () => clearInterval(counterInterval);
     }, [isThreatShieldActive]);
 
+    useEffect(() => {
+        let logInterval: number;
+        if (isRecallBlockerActive) {
+            const updateLog = () => {
+                setRecallBlockerLog(`Last Action: Sanitized 1 potential snapshot fragment at ${new Date().toLocaleTimeString()}.`);
+            };
+            updateLog(); // Initial log
+            logInterval = window.setInterval(updateLog, 7500); // Update every 7.5 seconds
+        } else {
+            setRecallBlockerLog('');
+        }
+        return () => clearInterval(logInterval);
+    }, [isRecallBlockerActive]);
+
     const handleWebcamScan = () => {
         onAgentQuery('Scan the current page for any scripts or APIs attempting to enumerate or access webcam/camera devices. Report findings.');
     };
@@ -78,6 +94,31 @@ const DefensePanel: React.FC<DefensePanelProps> = ({ onAgentQuery }) => {
                         <p className="text-2xl font-mono text-green-400">{isThreatShieldActive ? threatsNeutralized : 'N/A'}</p>
                         <p className="text-xs text-gray-400">Threats Neutralized</p>
                     </div>
+                </div>
+            </PanelSection>
+            
+             <PanelSection title="System Integrity Shield">
+                <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
+                    <h4 className="text-lg font-semibold text-red-400 mb-2">Microsoft Recall Interceptor</h4>
+                    <p className="text-sm text-gray-300 mb-4">
+                        Microsoft Recall is a form of pervasive system-level surveillance that creates a detailed, searchable history of nearly all user activity. This is a significant privacy overreach. The snufulufugus interceptor is designed to shut this down.
+                    </p>
+                    <Toggle
+                        label="Activate Recall Interceptor"
+                        description="Hooks into OS-level APIs to block and sanitize screen and activity data before it can be processed by Recall."
+                        enabled={isRecallBlockerActive}
+                        setEnabled={setRecallBlockerActive}
+                    />
+                    {isRecallBlockerActive && (
+                    <div className="mt-4 p-3 bg-black/40 rounded border border-white/10 animate-fadeIn">
+                        <p className="font-mono text-xs text-green-400">
+                        [INTERCEPTOR ACTIVE] System calls to Windows.AI.MachineLearning and screen capture APIs are being monitored.
+                        </p>
+                        <p className="font-mono text-xs text-yellow-400 mt-1">
+                        {recallBlockerLog}
+                        </p>
+                    </div>
+                    )}
                 </div>
             </PanelSection>
 

@@ -122,6 +122,61 @@
         border-color: var(--accent-secondary);
         box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
       }
+      
+      /* Gooey Menu Styles */
+      .gooey-menu {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 1.5rem;
+        z-index: 100;
+        filter: url('#goo');
+        height: 50px;
+        width: 50px;
+      }
+
+      .gooey-menu__toggle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--accent-primary);
+        color: var(--bg-primary);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+      }
+      
+      .gooey-menu__toggle:hover {
+        transform: scale(1.1);
+      }
+
+      .gooey-menu__item {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--accent-secondary);
+        color: var(--bg-primary);
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        transform: translate3d(0, 0, 0);
+        will-change: transform;
+        cursor: pointer;
+      }
+      .gooey-menu__item:hover {
+        background-color: var(--accent-primary);
+      }
 
     </style>
   <script type="importmap">
@@ -136,6 +191,15 @@
 </script>
 </head>
   <body class="bg-[#0D0D0D] text-[#E0E0E0]">
+    <svg style="display:none">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

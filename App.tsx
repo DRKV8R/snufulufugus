@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Pillar, Persona, PrivateArchive, SpoofedEvent, PillarId, AgentConfig, MediaAsset, DecontaminationAsset } from './types';
-// FIX: Import SPOOF_ORIGINS from the shared constants file.
+
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { Pillar, Persona, PrivateArchive, SpoofedEvent, PillarId, AgentConfig, MediaAsset, DecontaminationAsset, PersonaActivityLog, PersonaHistory } from './types';
 import { PILLARS, DEFAULT_PERSONAS, VPN_REGIONS, DEFAULT_PRIVATE_ARCHIVES, SPOOF_ORIGINS } from './constants';
 import Sidebar from './components/Sidebar';
 import BrowserFrame from './components/BrowserFrame';
@@ -19,10 +19,9 @@ import MediaDecontaminationModal from './components/MediaDecontaminationModal';
 import DefensePanel from './components/panels/DefensePanel';
 import PolicyIntegrityPanel from './components/panels/PolicyIntegrityPanel';
 import { generateRandomPersona } from './utils/personaGenerator';
+import PanelTabBar from './components/PanelTabBar';
 
 
-// FIX: Add 'as const' to ensure `risk` properties are inferred as literal types
-// instead of `string`, matching the `SpoofedEvent` interface.
 const SPOOF_QUERIES = [
     { query: 'User Agent', risk: 'low', key: 'userAgent' },
     { query: 'Canvas Fingerprint', risk: 'medium' },
@@ -55,12 +54,11 @@ const SPOOF_QUERIES = [
 
 
 export default function App(): React.ReactElement {
-  const [activePillar, setActivePillar] = useState<Pillar>(PILLARS[0]);
   const [personas, setPersonas] = useState<Persona[]>(DEFAULT_PERSONAS);
   const [activePersona, setActivePersona] = useState<Persona>(personas[0]);
   const [activeVpnRegion, setActiveVpnRegion] = useState<string>(VPN_REGIONS[2]);
   const [sentryStatus, setSentryStatus] = useState<string>('Idle');
-  const [targetUrl, setTargetUrl] = useState('https://check.sso.dev/');
+  const [targetUrl, setTargetUrl] = useState('https://en.wikipedia.org/wiki/Special:Random');
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [privateArchives, setPrivateArchives] = useState<PrivateArchive[]>(DEFAULT_PRIVATE_ARCHIVES);
   const [isGoogleSandboxEnabled, setGoogleSandboxEnabled] = useState<boolean>(true);
@@ -69,6 +67,10 @@ export default function App(): React.ReactElement {
   const [spoofedEvents, setSpoofedEvents] = useState<SpoofedEvent[]>([]);
   const [showInstaller, setShowInstaller] = useState<boolean>(false);
   
+  // New UI State
+  const [openTabs, setOpenTabs] = useState<Pillar[]>([PILLARS[0]]);
+  const [activeTabId, setActiveTabId] = useState<PillarId | null>(PILLARS[0].id);
+
   // Purifier state
   const [isUrlStrippingEnabled, setUrlStrippingEnabled] = useState(true);
   const [isWebRtcLeakProtected, setWebRtcLeakProtected] = useState(true);
@@ -97,7 +99,19 @@ export default function App(): React.ReactElement {
   
   // Airgap Relay State
   const [isAirgapRelayActive, setIsAirgapRelayActive] = useState<boolean>(false);
+  
+  // Persona History State
+  const [personaHistory, setPersonaHistory] = useState<PersonaHistory>(() => {
+    try {
+      const savedHistory = localStorage.getItem('snufulufugus_persona_history');
+      return savedHistory ? JSON.parse(savedHistory) : {};
+    } catch (error) {
+      console.error("Could not parse persona history from localStorage", error);
+      return {};
+    }
+  });
 
+  const activePillar = useMemo(() => PILLARS.find(p => p.id === activeTabId), [activeTabId]);
 
   useEffect(() => {
     const isInstalled = localStorage.getItem('snufulufugus_installed');
@@ -105,6 +119,51 @@ export default function App(): React.ReactElement {
         setShowInstaller(true);
     }
   }, []);
+  
+  // Save history to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('snufulufugus_persona_history', JSON.stringify(personaHistory));
+    } catch (error) {
+      console.error("Could not save persona history to localStorage", error);
+    }
+  }, [personaHistory]);
+  
+  const logPersonaActivity = (personaId: string, log: PersonaActivityLog) => {
+    setPersonaHistory(prev => {
+      const newHistory = { ...prev };
+      if (!newHistory[personaId]) {
+        newHistory[personaId] = [];
+      }
+      newHistory[personaId].unshift(log); // Add to the beginning of the array
+      // Keep logs to a reasonable size, e.g., 100 entries per persona
+      if (newHistory[personaId].length > 100) {
+        newHistory[personaId] = newHistory[personaId].slice(0, 100);
+      }
+      return newHistory;
+    });
+  };
+
+  const handlePillarSelect = (pillar: Pillar) => {
+    if (!openTabs.some(tab => tab.id === pillar.id)) {
+      setOpenTabs(prev => [...prev, pillar]);
+    }
+    setActiveTabId(pillar.id);
+  };
+
+  const handleCloseTab = (tabIdToClose: PillarId) => {
+    const newTabs = openTabs.filter(tab => tab.id !== tabIdToClose);
+    setOpenTabs(newTabs);
+
+    if (activeTabId === tabIdToClose) {
+      if (newTabs.length > 0) {
+        const closingTabIndex = openTabs.findIndex(tab => tab.id === tabIdToClose);
+        setActiveTabId(newTabs[Math.max(0, closingTabIndex - 1)].id);
+      } else {
+        setActiveTabId(null);
+      }
+    }
+  };
 
   const handleInstallComplete = () => {
     localStorage.setItem('snufulufugus_installed', 'true');
@@ -170,24 +229,30 @@ export default function App(): React.ReactElement {
     const newPersona = generateRandomPersona();
     setPersonas(prev => [...prev, newPersona]);
   };
-
+  
+  const handleSetActivePersona = (persona: Persona) => {
+    setActivePersona(persona);
+    logPersonaActivity(persona.id, {
+      type: 'activation',
+      timestamp: new Date().toISOString(),
+      details: 'Persona activated for browsing session.'
+    });
+  };
 
   useEffect(() => {
-    // Simulate spoofing initialization
     const initTimer = setTimeout(() => {
         setSpoofingStatus('active');
     }, 2000);
 
-    // Simulate spoofing events
     const eventInterval = setInterval(() => {
         const randomQuery = SPOOF_QUERIES[Math.floor(Math.random() * SPOOF_QUERIES.length)];
         const randomOrigin = SPOOF_ORIGINS[Math.floor(Math.random() * SPOOF_ORIGINS.length)];
         
         let spoofedValue = 'Access Denied / Spoofed';
-        if (randomQuery.key) {
-            const key = randomQuery.key as keyof Persona;
+        if ('key' in randomQuery) {
+            const key = randomQuery.key;
             const personaValue = activePersona[key];
-            if (typeof personaValue === 'object') {
+            if (typeof personaValue === 'object' && personaValue !== null) {
                 spoofedValue = JSON.stringify(personaValue);
             } else if (personaValue !== undefined) {
                 spoofedValue = String(personaValue);
@@ -201,16 +266,32 @@ export default function App(): React.ReactElement {
             risk: randomQuery.risk,
             spoofedValue,
         };
-        setSpoofedEvents(prev => [newEvent, ...prev].slice(0, 100)); // Keep last 100 events
+        setSpoofedEvents(prev => [newEvent, ...prev].slice(0, 100));
+        logPersonaActivity(activePersona.id, {
+          type: 'intercept',
+          timestamp: new Date().toISOString(),
+          details: `Intercepted query "${randomQuery.query}" from ${randomOrigin}.`
+        });
     }, 3000);
+    
+    // Log site visit when targetUrl changes
+    if (targetUrl) {
+      logPersonaActivity(activePersona.id, {
+        type: 'visit',
+        timestamp: new Date().toISOString(),
+        details: `Visited URL: ${targetUrl}`
+      });
+    }
 
     return () => {
         clearTimeout(initTimer);
         clearInterval(eventInterval);
     };
-  }, [activePersona]);
+  }, [activePersona, targetUrl]); // Rerun effect when active persona or URL changes
 
   const renderActivePanel = () => {
+    if (!activePillar) return null;
+
     switch (activePillar.id) {
         case 'snufulufugus_core':
             return <GhostCorePanel 
@@ -256,10 +337,11 @@ export default function App(): React.ReactElement {
             return <PersonaDatabasePanel
                 personas={personas}
                 activePersona={activePersona}
-                setActivePersona={setActivePersona}
+                setActivePersona={handleSetActivePersona}
                 spoofedEvents={spoofedEvents}
                 targetUrl={targetUrl}
                 onGeneratePersona={handleGeneratePersona}
+                personaHistory={personaHistory}
              />;
         case 'snufulufugus_settings':
             return <SettingsPanel currentConfig={agentConfig} onSaveConfig={setAgentConfig} />;
@@ -281,10 +363,13 @@ export default function App(): React.ReactElement {
   }
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden">
+    <div className="flex h-screen w-screen overflow-hidden flex-col bg-black">
       {showInstaller && <InstallerModal onComplete={handleInstallComplete} />}
-      <Sidebar activePillar={activePillar} setActivePillar={setActivePillar} />
-      <main className="flex-1 flex flex-col bg-[#0D0D0D]">
+      <Sidebar 
+        onSelectPillar={handlePillarSelect} 
+        activePillarId={activeTabId}
+      />
+      <main className="flex-1 flex flex-col bg-[#0D0D0D] overflow-hidden">
         <BrowserFrame 
           activePersona={activePersona}
           activeVpnRegion={activeVpnRegion}
@@ -301,15 +386,35 @@ export default function App(): React.ReactElement {
           isAgentLoading={isAgentLoading}
           isAirgapRelayActive={isAirgapRelayActive}
         />
-        <div className="flex-1 flex">
-            <div className="w-full flex-1 p-4 md:p-6 overflow-y-auto">
+        <div className="flex-1 flex flex-col">
+          <div className="flex-1 bg-black border-t border-[rgba(0,255,255,0.15)]">
+            <iframe
+              ref={iframeRef}
+              src={targetUrl}
+              className="w-full h-full"
+              title="snufulufugus browser content"
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+            />
+          </div>
+          {openTabs.length > 0 && activeTabId && (
+            <div className="flex flex-col flex-shrink-0" style={{ maxHeight: '45vh', minHeight: '250px' }}>
+              <PanelTabBar
+                tabs={openTabs}
+                activeTabId={activeTabId}
+                onSelectTab={setActiveTabId}
+                onCloseTab={handleCloseTab}
+              />
+              <div className="w-full flex-1 p-4 md:p-6 overflow-y-auto bg-[#0D0D0D] border-t border-[rgba(0,255,255,0.15)]">
                 {renderActivePanel()}
+              </div>
             </div>
+          )}
         </div>
       </main>
       <AgentResponseModal 
         isOpen={isAgentModalOpen}
         onClose={() => setIsAgentModalOpen(false)}
+        // FIX: Pass the correct state variable 'agentReport' to the modal.
         report={agentReport}
         isLoading={isAgentLoading}
       />

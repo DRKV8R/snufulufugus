@@ -394,7 +394,7 @@ export const COMMON_CPUS = [
     'Intel Core i7-1165G7', 'AMD Ryzen 5 5600X', 'Apple M1', 'Intel Core i5-10400'
 ];
 
-export const COMMON_PLATFORMS = ['Win32', 'MacIntel', 'Linux x86_64', 'iPhone', 'Android'];
+export const COMMON_PLATFORMS = ['Win32', 'MacIntel', 'Linux x86_64', 'iPhone'];
 
 export const COMMON_RESOLUTIONS = ['1920x1080', '1366x768', '1440x900', '1536x864', '2560x1440', '360x640', '390x844'];
 
@@ -404,3 +404,35 @@ export const COMMON_USER_AGENTS = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0',
     'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1'
 ];
+
+export const FONT_PACKS: Record<string, string[]> = {
+  windows: ['Arial', 'Calibri', 'Cambria', 'Consolas', 'Courier New', 'Segoe UI', 'Tahoma', 'Times New Roman', 'Verdana'],
+  macos: ['Arial', 'Courier New', 'Geneva', 'Georgia', 'Helvetica Neue', 'Lucida Grande', 'San Francisco', 'Times New Roman'],
+  linux: ['DejaVu Sans', 'Liberation Serif', 'Noto Sans', 'Ubuntu', 'Fira Code', 'Monospace'],
+  ios: ['American Typewriter', 'Arial', 'Courier New', 'Georgia', 'Helvetica Neue', 'San Francisco', 'Times New Roman'],
+};
+
+export const GENERATOR_DATA = {
+  occupations: [
+    { name: 'Software Engineer', category: 'tech', income: ['middle', 'high'] },
+    { name: 'Marketing Manager', category: 'business', income: ['middle', 'high'] },
+    { name: 'Graphic Designer', category: 'creative', income: ['low', 'middle'] },
+    { name: 'University Student', category: 'education', income: ['low'] },
+    { name: 'Registered Nurse', category: 'health', income: ['middle'] },
+    { name: 'Accountant', category: 'business', income: ['middle'] },
+    { name: 'Retail Associate', category: 'service', income: ['low'] },
+  ],
+  interests: {
+    tech: ['Programming', 'Open Source', 'Gadgets', 'Cybersecurity', 'AI'],
+    business: ['Finance', 'Startups', 'Leadership', 'Economics', 'Networking'],
+    creative: ['Art', 'Photography', 'Music', 'Film', 'Typography'],
+    education: ['Studying', 'Research', 'Socializing', 'Gaming', 'Part-time jobs'],
+    health: ['Fitness', 'Healthy Eating', 'Medical Journals', 'Hiking', 'Yoga'],
+    service: ['Fashion', 'Customer Service', 'Social Media', 'Movies', 'Music'],
+  },
+  shoppingHabits: {
+    low: ['Budget', 'Mid-range'],
+    middle: ['Mid-range', 'Luxury'],
+    high: ['Luxury'],
+  },
+};

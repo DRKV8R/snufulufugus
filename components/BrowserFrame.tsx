@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Persona, SpoofedEvent } from '../types';
-import { GlobeIcon, UserIcon, ShieldIcon, ArrowLeftIcon, ArrowRightIcon, RefreshCwIcon, LockIcon, FilterOffIcon, XIcon, SearchIcon } from './Icons';
+import { GlobeIcon, UserIcon, ShieldIcon, ArrowLeftIcon, ArrowRightIcon, RefreshCwIcon, LockIcon, FilterOffIcon, XIcon, SearchIcon, MenuIcon } from './Icons';
 import AgentCommandBar from './AgentCommandBar';
 import Scorecard from './Scorecard';
 import { SEARCH_ENGINES } from '../constants';
@@ -123,7 +123,9 @@ const BrowserFrame: React.FC<BrowserFrameProps> = (props) => {
     <div className="w-full bg-[#1A1A1A]/50 border-b border-[rgba(0,255,255,0.15)] p-2 shadow-md backdrop-blur-sm flex-shrink-0">
       {/* Top bar with HUD */}
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-md font-bold text-[#00FFFF] hidden sm:block font-mono tracking-widest">SNUFULUFUGUS</h2>
+        <div className="flex items-center space-x-3">
+          <h2 className="text-md font-bold text-[#00FFFF] hidden sm:block font-mono tracking-widest pl-2">SNUFULUFUGUS</h2>
+        </div>
         <div className="flex items-center space-x-4 text-xs text-[#E0E0E0]">
           <Scorecard events={spoofedEvents} />
           <div className="relative">

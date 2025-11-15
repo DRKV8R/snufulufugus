@@ -1,14 +1,11 @@
+
+
 import React, { useState, useMemo, useEffect } from 'react';
 import Panel, { PanelSection } from './Panel';
-import { Persona, SpoofedEvent } from '../../types';
+import { Persona, SpoofedEvent, PersonaHistory } from '../../types';
 import PersonaDetailModal from '../PersonaDetailModal';
-import { ChevronUpIcon, ChevronDownIcon, StarIcon } from '../Icons'; // Assuming StarIcon exists
+import { ChevronUpIcon, ChevronDownIcon, StarIcon } from '../Icons';
 import FingerprintVisual from '../FingerprintVisual';
-
-// Add StarIcon if it doesn't exist in Icons.tsx
-const StarIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-);
 
 interface PersonaDatabasePanelProps {
     personas: Persona[];
@@ -17,9 +14,10 @@ interface PersonaDatabasePanelProps {
     spoofedEvents: SpoofedEvent[];
     targetUrl: string;
     onGeneratePersona: () => void;
+    personaHistory: PersonaHistory;
 }
 
-const PersonaDatabasePanel: React.FC<PersonaDatabasePanelProps> = ({ personas, activePersona, setActivePersona, spoofedEvents, targetUrl, onGeneratePersona }) => {
+const PersonaDatabasePanel: React.FC<PersonaDatabasePanelProps> = ({ personas, activePersona, setActivePersona, spoofedEvents, targetUrl, onGeneratePersona, personaHistory }) => {
     
     const [viewingPersona, setViewingPersona] = useState<Persona | null>(null);
     const [sortConfig, setSortConfig] = useState<{ key: keyof Persona; direction: 'ascending' | 'descending' }>({ key: 'name', direction: 'ascending' });
@@ -47,6 +45,21 @@ const PersonaDatabasePanel: React.FC<PersonaDatabasePanelProps> = ({ personas, a
         }
         return sortableItems;
     }, [personas, sortConfig]);
+
+    const activationHistory = useMemo(() => {
+        const allActivations = Object.entries(personaHistory)
+            .flatMap(([personaId, logs]) => {
+                // FIX: Add a type guard to ensure 'logs' is an array. Data from localStorage could be malformed.
+                if (!Array.isArray(logs)) {
+                    return [];
+                }
+                return logs
+                    .filter(log => log.type === 'activation')
+                    .map(log => ({ ...log, personaId }));
+            })
+            .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+        return allActivations.slice(0, 10); // Show last 10 activations
+    }, [personaHistory]);
 
     const requestSort = (key: keyof Persona) => {
         let direction: 'ascending' | 'descending' = 'ascending';
@@ -180,12 +193,36 @@ const PersonaDatabasePanel: React.FC<PersonaDatabasePanelProps> = ({ personas, a
                         </table>
                     </div>
                 </PanelSection>
+                
+                 <PanelSection title="Persona Activation History">
+                    <p className="text-sm text-gray-400 mb-2">Most recent persona activations for this session.</p>
+                    <div className="max-h-40 overflow-y-auto pr-2">
+                        {activationHistory.length > 0 ? (
+                            <ul className="space-y-2">
+                                {activationHistory.map((log, index) => {
+                                    const persona = personas.find(p => p.id === log.personaId);
+                                    return (
+                                        <li key={index} className="text-xs font-mono p-2 bg-black/30 rounded">
+                                            <span className="text-cyan-400">{new Date(log.timestamp).toLocaleTimeString()}</span>
+                                            <span className="text-gray-400 mx-2">-</span>
+                                            <span className="text-white font-semibold">{persona?.name || 'Unknown Persona'}</span>
+                                            <span className="text-gray-500"> activated.</span>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        ) : (
+                            <p className="text-xs text-gray-500 text-center py-4">No personas activated yet.</p>
+                        )}
+                    </div>
+                </PanelSection>
             </Panel>
             <PersonaDetailModal 
                 persona={viewingPersona}
                 onClose={() => setViewingPersona(null)}
                 onActivate={setActivePersona}
                 isActive={activePersona.id === viewingPersona?.id}
+                history={viewingPersona ? personaHistory[viewingPersona.id] || [] : []}
             />
         </>
     );

@@ -62,13 +62,13 @@ const MediaDecontaminationModal: React.FC<MediaDecontaminationModalProps> = ({ a
                 <div className="flex space-x-4">
                      <button 
                         onClick={() => handlePlayback('Secure Local Player')}
-                        className="flex-1 sentinel-button primary"
+                        className="flex-1 snufulufugus-button primary"
                      >
                         Use Secure Local Player
                     </button>
                      <button 
                         onClick={() => handlePlayback('Sandboxed Web Player')}
-                        className="flex-1 sentinel-button"
+                        className="flex-1 snufulufugus-button"
                     >
                         Use Sandboxed Web Player
                     </button>

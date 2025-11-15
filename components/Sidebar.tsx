@@ -1,39 +1,56 @@
-import React from 'react';
-import { Pillar } from '../types';
+import React, { useState } from 'react';
+import { Pillar, PillarId } from '../types';
 import { PILLARS } from '../constants';
+import { MenuIcon, XIcon } from './Icons';
 
-interface SidebarProps {
-  activePillar: Pillar;
-  setActivePillar: (pillar: Pillar) => void;
+interface GooeyMenuProps {
+  onSelectPillar: (pillar: Pillar) => void;
+  activePillarId: PillarId | null;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ activePillar, setActivePillar }) => {
+const Sidebar: React.FC<GooeyMenuProps> = ({ onSelectPillar, activePillarId }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const menuItems = PILLARS;
+  const radius = 150; // px
+  const angleStep = 90 / (menuItems.length - 1); // Arc over 90 degrees
+
   return (
-    <nav className="flex flex-col items-center bg-[#0D0D0D] border-r border-[rgba(0,255,255,0.15)] p-2 md:p-4 space-y-4">
-      <div className="text-[#00FFFF] text-center pb-4 border-b border-[rgba(0,255,255,0.15)] hidden md:block">
-        <h1 className="text-xl font-bold font-mono tracking-widest">SNUFULUFUGUS</h1>
-        <p className="text-xs text-[#00BFFF]">v1.0</p>
-      </div>
-      <div className="flex-1 flex flex-col items-center md:items-stretch space-y-2">
-        {PILLARS.map((pillar) => (
+    <nav className="gooey-menu">
+      {menuItems.map((pillar, index) => {
+        const angle = angleStep * index;
+        const angleRad = angle * (Math.PI / 180);
+        const x = radius * Math.cos(angleRad);
+        const y = -radius * Math.sin(angleRad);
+        
+        const transform = isOpen ? `translate3d(${x}px, ${y}px, 0) scale(1)` : 'translate3d(0, 0, 0) scale(0)';
+        const transitionDelay = isOpen ? `${index * 0.03}s` : `${(menuItems.length - index) * 0.03}s`;
+
+        const isActive = activePillarId === pillar.id;
+
+        return (
           <button
             key={pillar.id}
-            onClick={() => setActivePillar(pillar)}
-            className={`flex items-center space-x-3 p-3 rounded-md transition-all duration-200 static-hover ${
-              activePillar.id === pillar.id
-                ? 'bg-[rgba(0,255,255,0.1)] text-[#00FFFF] shadow-lg shadow-cyan-500/10'
-                : 'text-[#A0A0E0] hover:bg-[#1A1A1A] hover:text-white'
-            }`}
+            className="gooey-menu__item"
+            onClick={() => {
+              onSelectPillar(pillar);
+              setIsOpen(false);
+            }}
+            style={{
+              transform,
+              transitionDelay,
+              backgroundColor: isActive ? 'var(--accent-primary)' : 'var(--accent-secondary)'
+            }}
             title={pillar.name}
           >
-            {pillar.icon}
-            <span className="hidden md:inline">{pillar.name}</span>
+            {React.cloneElement(pillar.icon as React.ReactElement, { className: "w-6 h-6" })}
           </button>
-        ))}
-      </div>
-      <div className="text-xs text-gray-600 text-center hidden md:block font-mono">
-        &copy; 2025 snufulufugus.
-      </div>
+        );
+      })}
+      
+      <button className="gooey-menu__toggle" onClick={() => setIsOpen(!isOpen)} title="Toggle Menu">
+        {isOpen ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+      </button>
     </nav>
   );
 };

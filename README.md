@@ -6,6 +6,14 @@ This project serves as a technology demonstrator, conceptualizing how advanced p
 
 ---
 
+## Operational Philosophy: The Data Veil
+
+The core principle of snufulufugus is to act as a "Data Veil." In the modern web, browsing is often like driving around towing a billboard with all of your personal info, and being told you can't go to the grocery store without providing a social security number.
+
+snufulufugus is designed to counteract this. It operates on the philosophy of **Full System Emulation**, giving websites the complete, consistent data they demand to function, but ensuring that data belongs to a carefully crafted, artificial persona—never the real user. The goal is to safeguard the user's information by projecting a plausible, alternative identity, allowing for neutral observation without leaking real data.
+
+---
+
 ## Core Pillars
 
 The application is organized into several "Pillars," each representing a core functional area:
@@ -27,11 +35,16 @@ The application is organized into several "Pillars," each representing a core fu
 
 snufulufugus incorporates concepts from various security and intelligence tools to provide a rich, simulated experience:
 
+-   **Full System Emulation**: The core architecture that presents a complete, virtualized hardware and software environment to the target website, ensuring all data points are consistent with the active persona.
 -   **AI Agent**: An onboard analysis assistant, powered by Google Gemini, capable of performing complex OSINT, code analysis, and security assessments.
--   **Threat Shield**: A simulated real-time scanner that analyzes scripts and downloads for threats.
--   **ASN-level Profiling**: Personas now include Autonomous System Number (ASN) data for more realistic network-level fingerprinting.
--   **Deep OSINT Scan**: A one-click deep OSINT scan powered by the AI Agent.
--   **Tracker Analysis**: The Purifier's deep scan functionality, which intercepts and logs third-party trackers.
--   **Threat Monitor**: A simulated monitoring system that logs suspicious inbound connections to demonstrate threat detection.
--   **Webcam Security**: A module to enforce disabled webcam access and scan for device enumeration scripts on a target page.
+-   **Data Leakage Prevention**: A simulated security layer that monitors all outgoing traffic to ensure no real user data ever leaves the browser.
+-   **Microsoft Recall Blocker**: A conceptual defense that simulates the interception and sanitization of OS-level screen capture and activity logging APIs.
 -   **Policy Integrity Analysis**: A unique AI-powered feature that cross-references a website's privacy policy with its observed tracking behavior to identify discrepancies.
+
+---
+
+## Note on Technical Limitations
+
+As a web-based technology demonstrator, `snufulufugus` renders target websites within an `<iframe>`. Many modern websites employ security headers like `X-Frame-Options` or a Content Security Policy (`frame-ancestors`) to prevent themselves from being embedded in other sites.
+
+This is a standard, real-world security feature, not a bug. When a website "refuses to connect," it's because its own policy is blocking it. The "Full System Emulation" concept is our architectural answer to this challenge—in a standalone, native application, this would be achieved by running the browser in a true virtual machine, which is not possible in this web environment. For the best experience, target sites that do not have these strict anti-framing policies in place.

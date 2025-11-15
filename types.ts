@@ -112,3 +112,13 @@ export interface SearchEngine {
   name: string;
   searchUrl: string; // URL template with %s for the query
 }
+
+export interface PersonaActivityLog {
+  type: 'activation' | 'visit' | 'intercept' | 'analysis';
+  timestamp: string;
+  details: string;
+}
+
+export type PersonaHistory = {
+  [personaId: string]: PersonaActivityLog[];
+};
