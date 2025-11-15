@@ -56,7 +56,7 @@ const SPOOF_QUERIES = [
 export default function App(): React.ReactElement {
   const [personas, setPersonas] = useState<Persona[]>(DEFAULT_PERSONAS);
   const [activePersona, setActivePersona] = useState<Persona>(personas[0]);
-  const [activeVpnRegion, setActiveVpnRegion] = useState<string>(VPN_REGIONS[2]);
+  const [activeVpnRegion, setActiveVpnRegion] = useState<string>('US-West');
   const [sentryStatus, setSentryStatus] = useState<string>('Idle');
   const [targetUrl, setTargetUrl] = useState('https://en.wikipedia.org/wiki/Special:Random');
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -250,7 +250,7 @@ export default function App(): React.ReactElement {
         
         let spoofedValue = 'Access Denied / Spoofed';
         if ('key' in randomQuery) {
-            const key = randomQuery.key;
+            const key = randomQuery.key as keyof Persona;
             const personaValue = activePersona[key];
             if (typeof personaValue === 'object' && personaValue !== null) {
                 spoofedValue = JSON.stringify(personaValue);
@@ -414,7 +414,6 @@ export default function App(): React.ReactElement {
       <AgentResponseModal 
         isOpen={isAgentModalOpen}
         onClose={() => setIsAgentModalOpen(false)}
-        // FIX: Pass the correct state variable 'agentReport' to the modal.
         report={agentReport}
         isLoading={isAgentLoading}
       />

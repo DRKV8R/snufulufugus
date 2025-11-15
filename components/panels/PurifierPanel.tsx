@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import Panel, { PanelSection } from './Panel';
 import { ChevronDownIcon, ChevronUpIcon } from '../Icons';
 import { SpoofedEvent } from '../../types';
-// FIX: Import SPOOF_ORIGINS to resolve the undefined variable error.
 import { SPOOF_ORIGINS } from '../../constants';
 
 interface PurifierPanelProps {

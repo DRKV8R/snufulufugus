@@ -38,13 +38,19 @@ snufulufugus incorporates concepts from various security and intelligence tools 
 -   **Full System Emulation**: The core architecture that presents a complete, virtualized hardware and software environment to the target website, ensuring all data points are consistent with the active persona.
 -   **AI Agent**: An onboard analysis assistant, powered by Google Gemini, capable of performing complex OSINT, code analysis, and security assessments.
 -   **Data Leakage Prevention**: A simulated security layer that monitors all outgoing traffic to ensure no real user data ever leaves the browser.
--   **Microsoft Recall Blocker**: A conceptual defense that simulates the interception and sanitization of OS-level screen capture and activity logging APIs.
+-   **Recall Data Interceptor & Poisoning**: A conceptual defense that simulates intercepting OS-level screen capture calls and injecting decoy data to disrupt and poison Recall's activity history.
 -   **Policy Integrity Analysis**: A unique AI-powered feature that cross-references a website's privacy policy with its observed tracking behavior to identify discrepancies.
 
 ---
 
 ## Note on Technical Limitations
 
-As a web-based technology demonstrator, `snufulufugus` renders target websites within an `<iframe>`. Many modern websites employ security headers like `X-Frame-Options` or a Content Security Policy (`frame-ancestors`) to prevent themselves from being embedded in other sites.
+As a web-based technology demonstrator, `snufulufugus` renders target websites within an `<iframe>`. 
 
-This is a standard, real-world security feature, not a bug. When a website "refuses to connect," it's because its own policy is blocking it. The "Full System Emulation" concept is our architectural answer to this challenge—in a standalone, native application, this would be achieved by running the browser in a true virtual machine, which is not possible in this web environment. For the best experience, target sites that do not have these strict anti-framing policies in place.
+### `iframe` Security
+Many modern websites employ security headers like `X-Frame-Options` or a Content Security Policy (`frame-ancestors`) to prevent themselves from being embedded in other sites. This is a standard, real-world security feature, not a bug. When a website "refuses to connect," it's because its own policy is blocking it. The "Full System Emulation" concept is our architectural answer to this challenge—in a standalone, native application, this would be achieved by running the browser in a true virtual machine, which is not possible in this web environment.
+
+### Link Interception
+Modern browser security policies prevent a website from intercepting user clicks on links inside a cross-origin `<iframe>`. This means that `snufulufugus` cannot automatically open links from a webpage in a new in-app tab (e.g., via `Ctrl+Click`).
+
+**To open a link in a new `snufulufugus` tab, you must right-click the link, copy its address, and paste it into a new tab's address bar.** This is a fundamental security restriction of the web platform to protect users.

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type PillarId = 'snufulufugus_stats' | 'snufulufugus_core' | 'snufulufugus_key' | 'snufulufugus_toolkit' | 'snufulufugus_archive' | 'snufulufugus_purifier' | 'snufulufugus_database' | 'snufulufugus_settings' | 'snufulufugus_defense' | 'snufulufugus_policy';
+export type PillarId = 'snufulufugus_stats' | 'snufulufugus_core' | 'snufulufugus_key' | 'snufulufugus_toolkit' | 'snufulufugus_archive' | 'snufulufugus_purifier' | 'snufulufugus_database' | 'snufulufugus_settings' | 'snufulufugus_defense' | 'snufulufugus_policy' | 'snufulufugus_menu';
 
 export interface Pillar {
   id: PillarId;
@@ -122,3 +122,11 @@ export interface PersonaActivityLog {
 export type PersonaHistory = {
   [personaId: string]: PersonaActivityLog[];
 };
+
+export interface BrowserTab {
+    id: string;
+    url: string;
+    title: string;
+}
+
+export type RecallBlockerAction = 'sanitize' | 'decoy';

@@ -1,9 +1,15 @@
 import React from 'react';
 // FIX: Import SpoofedEvent to correctly type RISK_SCORES.
 import { Pillar, Persona, SentryPacket, HydraScript, PrivateArchive, PillarId, SearchEngine, SpoofedEvent } from './types';
-import { DashboardIcon, GhostIcon, KeyIcon, BeakerIcon, HistoryIcon, FilterIcon, DatabaseIcon, SettingsIcon, ShieldCheckIcon, ClipboardCheckIcon } from './components/Icons';
+import { DashboardIcon, GhostIcon, KeyIcon, BeakerIcon, HistoryIcon, FilterIcon, DatabaseIcon, SettingsIcon, ShieldCheckIcon, ClipboardCheckIcon, MenuIcon } from './components/Icons';
 
 export const PILLARS: Pillar[] = [
+  {
+    id: 'snufulufugus_menu',
+    name: 'Menu',
+    description: 'Main menu',
+    icon: <MenuIcon className="w-6 h-6" />,
+  },
   {
     id: 'snufulufugus_stats',
     name: 'Dashboard',
@@ -152,41 +158,6 @@ export const DEFAULT_PERSONAS: Persona[] = [
     socialMediaPresence: 'High',
     acceptLanguages: 'en-US,en;q=0.9',
   },
-  {
-    id: 'p3',
-    name: 'Gorp, the Time Traveler',
-    team: 'Anomalous Entities',
-    occupation: 'Temporal Observer / Sandwich Enthusiast',
-    backstory: 'Gorp claims to be from the year 2342, sent back to observe "The Great Binge-Watching Era." He is easily distracted by artisanal pickles and communicates primarily through obscure 90s TV show references.',
-    region: 'Antarctica',
-    userAgent: 'Mozilla/5.0 (X11; FreeBSD amd64; rv:109.0) Gecko/20100101 Firefox/115.0',
-    resolution: '1920x1080',
-    language: 'en-US',
-    timezone: 'Antarctica/McMurdo',
-    platform: 'FreeBSD amd64',
-    asn: 'AS27504',
-    asnDescription: 'US-NATIONAL-SCIENCE-FOUNDATION, US',
-    colorDepth: 32,
-    pixelDepth: 32,
-    plugins: 'No plugins reported',
-    incomeLevel: 'unknown',
-    ethnicity: 'Unknown',
-    politicalAlignment: 'Post-Scarcity Utopian',
-    deviceMemory: 16,
-    gpu: 'llvmpipe (LLVM 15.0.7, 256 bits)',
-    touchSupport: false,
-    browserVendor: '',
-    installedFonts: ['DejaVu Sans Mono', 'Liberation Serif', 'Noto Sans'],
-    cookiesEnabled: false,
-    doNotTrack: '1',
-    connectionType: 'ethernet',
-    downlink: 100,
-    educationLevel: 'PhD',
-    interests: ['Quantum Physics', 'Pastrami', 'The works of Joss Whedon', 'Avoiding paradoxes'],
-    shoppingHabits: 'Unknown',
-    socialMediaPresence: 'None',
-    acceptLanguages: 'en-US,en;q=0.5',
-  },
    {
     id: 'p4',
     name: 'Agnes Weatherwax',
@@ -256,41 +227,6 @@ export const DEFAULT_PERSONAS: Persona[] = [
     shoppingHabits: 'Budget',
     socialMediaPresence: 'Medium',
     acceptLanguages: 'ja,en-US;q=0.9,en;q=0.8',
-  },
-  {
-    id: 'p6',
-    name: 'Nyx',
-    team: 'Independent Researchers',
-    occupation: 'Digital Phantom',
-    backstory: 'Existing only as whispers in data streams, Nyx is a modern ghost in the machine. Their motives are unclear, but their presence is felt in the quiet correction of information and the subtle disruption of data harvesters.',
-    region: 'Iceland',
-    userAgent: 'Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0',
-    resolution: '1920x1200',
-    language: 'en-GB',
-    timezone: 'Atlantic/Reykjavik',
-    platform: 'Linux x86_64',
-    asn: 'AS50899',
-    asnDescription: 'NOVA-ASN, IS',
-    colorDepth: 24,
-    pixelDepth: 24,
-    plugins: 'No plugins reported',
-    incomeLevel: 'unknown',
-    ethnicity: 'Unknown',
-    politicalAlignment: 'Undeclared',
-    deviceMemory: 32,
-    gpu: 'AMD Radeon RX 6800 XT',
-    touchSupport: false,
-    browserVendor: '',
-    installedFonts: ['Terminus', 'Iosevka', 'Fira Code', 'Monospace'],
-    cookiesEnabled: false,
-    doNotTrack: '1',
-    connectionType: 'ethernet',
-    downlink: 1000,
-    educationLevel: 'Unknown',
-    interests: ['Cryptography', 'Decentralization', 'Philosophy', 'Theoretical Physics'],
-    shoppingHabits: 'Unknown',
-    socialMediaPresence: 'None',
-    acceptLanguages: 'en-GB,en;q=0.5',
   }
 ];
 
@@ -401,38 +337,41 @@ export const COMMON_RESOLUTIONS = ['1920x1080', '1366x768', '1440x900', '1536x86
 export const COMMON_USER_AGENTS = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1',
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0',
-    'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1'
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:126.0) Gecko/20100101 Firefox/126.0'
 ];
 
-export const FONT_PACKS: Record<string, string[]> = {
-  windows: ['Arial', 'Calibri', 'Cambria', 'Consolas', 'Courier New', 'Segoe UI', 'Tahoma', 'Times New Roman', 'Verdana'],
-  macos: ['Arial', 'Courier New', 'Geneva', 'Georgia', 'Helvetica Neue', 'Lucida Grande', 'San Francisco', 'Times New Roman'],
-  linux: ['DejaVu Sans', 'Liberation Serif', 'Noto Sans', 'Ubuntu', 'Fira Code', 'Monospace'],
-  ios: ['American Typewriter', 'Arial', 'Courier New', 'Georgia', 'Helvetica Neue', 'San Francisco', 'Times New Roman'],
+export const FONT_PACKS: { [key: string]: string[] } = {
+    windows: ['Arial', 'Calibri', 'Cambria', 'Consolas', 'Courier New', 'Segoe UI', 'Tahoma', 'Times New Roman', 'Verdana'],
+    macos: ['Arial', 'Courier', 'Geneva', 'Georgia', 'Helvetica', 'Lucida Grande', 'San Francisco', 'Times', 'Verdana'],
+    linux: ['DejaVu Sans', 'Liberation Mono', 'Noto Sans', 'Ubuntu', 'Cantarell', 'Fira Code'],
+    ios: ['Arial', 'Courier New', 'Georgia', 'Helvetica Neue', 'San Francisco', 'Times New Roman', 'Verdana']
 };
 
 export const GENERATOR_DATA = {
-  occupations: [
-    { name: 'Software Engineer', category: 'tech', income: ['middle', 'high'] },
-    { name: 'Marketing Manager', category: 'business', income: ['middle', 'high'] },
-    { name: 'Graphic Designer', category: 'creative', income: ['low', 'middle'] },
-    { name: 'University Student', category: 'education', income: ['low'] },
-    { name: 'Registered Nurse', category: 'health', income: ['middle'] },
-    { name: 'Accountant', category: 'business', income: ['middle'] },
-    { name: 'Retail Associate', category: 'service', income: ['low'] },
-  ],
-  interests: {
-    tech: ['Programming', 'Open Source', 'Gadgets', 'Cybersecurity', 'AI'],
-    business: ['Finance', 'Startups', 'Leadership', 'Economics', 'Networking'],
-    creative: ['Art', 'Photography', 'Music', 'Film', 'Typography'],
-    education: ['Studying', 'Research', 'Socializing', 'Gaming', 'Part-time jobs'],
-    health: ['Fitness', 'Healthy Eating', 'Medical Journals', 'Hiking', 'Yoga'],
-    service: ['Fashion', 'Customer Service', 'Social Media', 'Movies', 'Music'],
-  },
-  shoppingHabits: {
-    low: ['Budget', 'Mid-range'],
-    middle: ['Mid-range', 'Luxury'],
-    high: ['Luxury'],
-  },
+    occupations: [
+        { name: 'Software Developer', category: 'tech', income: ['middle', 'high'] },
+        { name: 'Graphic Designer', category: 'creative', income: ['low', 'middle'] },
+        { name: 'Marketing Manager', category: 'business', income: ['middle', 'high'] },
+        { name: 'Accountant', category: 'business', income: ['middle'] },
+        { name: 'High School Teacher', category: 'education', income: ['low', 'middle'] },
+        { name: 'Registered Nurse', category: 'health', income: ['middle'] },
+        { name: 'Retail Associate', category: 'service', income: ['low'] },
+    ],
+    interests: {
+        tech: ['Open Source', 'Gaming', 'Sci-Fi Movies', 'Home Automation'],
+        creative: ['Photography', 'Indie Music', 'Art Museums', 'DIY Crafts'],
+        business: ['Investing', 'Podcasts', 'Networking Events', 'Golf'],
+        education: ['Reading', 'Documentaries', 'Museums', 'Hiking'],
+        health: ['Fitness', 'Healthy Cooking', 'Yoga', 'Outdoor Activities'],
+        service: ['Watching TV', 'Social Media', 'Dining Out', 'Movies']
+    },
+    shoppingHabits: {
+        low: ['Budget', 'Mid-range'],
+        middle: ['Mid-range'],
+        high: ['Mid-range', 'Luxury'],
+        unknown: ['Unknown']
+    }
 };
