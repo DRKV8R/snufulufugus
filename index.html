@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF--8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>snufulufugus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Roboto+Mono:wght@300;400;500;700&display=swap');
+      
+      :root {
+        --bg-primary: #0D0D0D;
+        --bg-secondary: #1A1A1A;
+        --bg-tertiary: #262626;
+        --text-primary: #E0E0E0;
+        --text-secondary: #A0A0A0;
+        --accent-primary: #00FFFF; /* Cyan */
+        --accent-secondary: #00BFFF; /* Deep sky blue */
+        --border-color: rgba(0, 255, 255, 0.15);
+        --font-sans: 'Inter', sans-serif;
+        --font-mono: 'Roboto Mono', monospace;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      iframe {
+        border: none;
+      }
+      
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-primary);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--bg-tertiary);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-secondary);
+      }
+
+      /* Static hover effect */
+      .static-hover {
+        position: relative;
+        z-index: 1;
+      }
+      .static-hover:hover::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVAAAAacXJUPEBFQkZUT0hAhJygpKerq6vIycjLy8vMzc3Pz8/Q0NDR0dHT09Pa2try8vLz8/P09PT19fX29vb5+fr/wAALAAAAiUlEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=);
+        opacity: 0.08;
+        pointer-events: none;
+        z-index: -1;
+        animation: static-flicker 0.15s infinite;
+      }
+
+      @keyframes static-flicker {
+        0%, 100% { opacity: 0.08; }
+        50% { opacity: 0.12; }
+      }
+
+      /* Ticker animation */
+      @keyframes scroll-left {
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(-100%); }
+      }
+      .animate-scroll-left {
+        animation: scroll-left 40s linear infinite;
+      }
+
+      /* Custom component styles */
+      .snufulufugus-input {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        border-radius: 4px;
+        padding: 0.5rem 0.75rem;
+        transition: all 0.2s ease-in-out;
+      }
+      .snufulufugus-input:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+      }
+      
+      .snufulufugus-button {
+        background-color: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
+        color: var(--accent-primary);
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: all 0.2s ease-in-out;
+      }
+      .snufulufugus-button:hover {
+        background-color: var(--accent-primary);
+        color: var(--bg-primary);
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      }
+      .snufulufugus-button.primary {
+        background-color: var(--accent-primary);
+        color: var(--bg-primary);
+        border-color: var(--accent-primary);
+      }
+       .snufulufugus-button.primary:hover {
+        background-color: var(--accent-secondary);
+        border-color: var(--accent-secondary);
+        box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+      }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+</head>
+  <body class="bg-[#0D0D0D] text-[#E0E0E0]">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
